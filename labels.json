@@ -59,4 +59,26 @@
     "name": "done",
     "color": "0e8a16"
   }
+  [
+  // 기존 라벨들 ...
+
+  // 📚 학습/자격증
+  { "name": "TOEIC", "color": "0052cc" },
+  { "name": "TOEFL", "color": "4c1d95" },
+  { "name": "JLPT", "color": "0ea5e9" },
+
+  // 🏋 운동/건강
+  { "name": "헬스", "color": "2dd4bf" },
+  { "name": "러닝", "color": "059669" },
+  { "name": "식단관리", "color": "facc15" },
+
+  // 🎥 콘텐츠/개인 프로젝트
+  { "name": "유튜브편집", "color": "ff005c" },
+  { "name": "썸네일제작", "color": "d946ef" },
+  { "name": "블로그", "color": "9333ea" },
+
+  // 🧠 기타 태그
+  { "name": "습관형성", "color": "14b8a6" },
+  { "name": "정리/회고", "color": "475569" }
+]
 ]
