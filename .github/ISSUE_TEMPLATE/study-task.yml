@@ -1,0 +1,63 @@
+name: "📚 Study Task"
+description: 수업/복습/과제/모의고사 작업 등록
+title: "[{과목}] 작업명 입력"
+labels: ["study"]
+body:
+  - type: dropdown
+    id: course
+    attributes:
+      label: 과목
+      options:
+        - 컴퓨터그래픽스
+        - 네트워크소켓
+        - R데이터분석
+        - 블록체인
+        - 기계학습
+        - 빅데이터분석
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: 작업 유형
+      options:
+        - 요약1p
+        - 유형문제
+        - 오답정리
+        - 실습/코드
+        - 모의고사
+    validations:
+      required: true
+  - type: input
+    id: due
+    attributes:
+      label: "📅 마감일 (YYYY-MM-DD)"
+      description: 예) 2025-10-12
+      placeholder: "YYYY-MM-DD"
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: 상세 내용
+      description: 목표/참고자료/체크리스트 등을 자유롭게 적으세요.
+      value: |
+        ### 목표
+        - [ ] 핵심 개념 정리
+        - [ ] 연습문제 N개
+        - [ ] 오답/회고
+
+        ### 참고
+        - 링크/자료
+
+        ### 형식
+        - 📅 마감일: YYYY-MM-DD
+        - ⏱ 예상시간: 90분
+  - type: checkboxes
+    id: milestones
+    attributes:
+      label: 마일스톤 연결 안내
+      description: "이슈 생성 후 오른쪽 사이드바에서 해당 주차/중간고사 마일스톤을 수동으로 선택하세요."
+      options:
+        - label: 확인했습니다
+          required: true

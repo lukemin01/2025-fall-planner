@@ -1,0 +1,78 @@
+name: due-soon-reminder
+
+on:
+  schedule:
+    # Runs 00:00 UTC daily (09:00 Asia/Seoul)
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scan open issues and comment if due soon / overdue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: "open",
+              per_page: 100
+            });
+
+            function parseDue(body) {
+              if (!body) return null;
+              const m = body.match(/📅\s*마감일[:\s]*([0-9]{4}-[0-9]{2}-[0-9]{2})/);
+              return m ? m[1] : null;
+            }
+
+            const today = new Date(); // UTC now
+            const ymd = d => d.toISOString().slice(0,10);
+
+            for (const issue of issues) {
+              const dueStr = parseDue(issue.body);
+              if (!dueStr) continue;
+
+              const due = new Date(dueStr + "T23:59:59Z");
+              const daysLeft = Math.floor((due - today) / (1000*60*60*24));
+
+              let comment = null;
+              let addLabel = null;
+              if (daysLeft === 1) {
+                comment = `⏰ **D-1**: 내일(\`${dueStr}\`) 마감입니다. 오늘 반드시 마무리합시다!`;
+                addLabel = "due-soon";
+              } else if (daysLeft === 0) {
+                comment = `🚨 **D-day**: 오늘(\`${dueStr}\`) 마감! 마지막 점검해주세요.`;
+                addLabel = "due-soon";
+              } else if (daysLeft < 0) {
+                comment = `⚠️ **지연**: 마감(\`${dueStr}\`)을 지났습니다. 우선순위를 재조정하고 처리해주세요.`;
+                addLabel = "overdue";
+              }
+
+              if (comment) {
+                // Ensure label exists on the repo
+                try {
+                  await github.rest.issues.addLabels({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issue.number,
+                    labels: [addLabel]
+                  });
+                } catch (e) {
+                  // ignore if label doesn't exist; recommend running bootstrap
+                  core.warning(`Label add failed: ${e.message}`);
+                }
+
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  body: comment
+                });
+              }
+            }

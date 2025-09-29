@@ -1,0 +1,62 @@
+[
+  {
+    "name": "그래픽스",
+    "color": "1f77b4"
+  },
+  {
+    "name": "네트워크소켓",
+    "color": "ff7f0e"
+  },
+  {
+    "name": "R데이터분석",
+    "color": "2ca02c"
+  },
+  {
+    "name": "블록체인",
+    "color": "d62728"
+  },
+  {
+    "name": "기계학습",
+    "color": "9467bd"
+  },
+  {
+    "name": "빅데이터분석",
+    "color": "8c564b"
+  },
+  {
+    "name": "요약1p",
+    "color": "17becf"
+  },
+  {
+    "name": "유형문제",
+    "color": "bcbd22"
+  },
+  {
+    "name": "오답정리",
+    "color": "e377c2"
+  },
+  {
+    "name": "실습/코드",
+    "color": "7f7f7f"
+  },
+  {
+    "name": "모의고사",
+    "color": "aec7e8"
+  },
+  {
+    "name": "study",
+    "color": "36a64f"
+  },
+  {
+    "name": "due-soon",
+    "color": "d93f0b"
+  },
+  {
+    "name": "overdue",
+    "color": "b60205"
+  },
+  {
+    "name": "done",
+    "color": "0e8a16"
+  }
+]
